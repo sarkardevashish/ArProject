@@ -107,7 +107,7 @@ const createScene = async () => {
     button1.color = "white";
     button1.cornerRadius = 20;
     button1.background = "green";
-    button1.onPointerUpObservable.add(function () {
+    button1.onPointerUpObservable.add(() => {
         alert("you did it!");
     });
     advancedTexture.addControl(button1);
