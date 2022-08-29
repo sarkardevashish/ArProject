@@ -16,10 +16,6 @@ const createScene = async () => {
 
     // scene.clearColor = new BABYLON.Color3.Black();
 
-    const box = BABYLON.MeshBuilder.CreateBox("box", {});
-    box.position.x = 2;
-    box.position.y = 1;
-
     const fish = BABYLON.SceneLoader.ImportMesh(
         "",
         "./assets/",
@@ -37,47 +33,48 @@ const createScene = async () => {
     //     scene
     // );
 
-    // Device Orientation camera
-    // Parameters : name, position, scene
-    var camera = new BABYLON.DeviceOrientationCamera(
-        "DevOr_camera",
-        new BABYLON.Vector3(0, 0, -10),
+   
+
+    // Arc Camera
+    const alpha = Math.PI / 4;
+    const beta = Math.PI / 3;
+    const radius = 8;
+    const target = BABYLON.Vector3(0, 1, 1);
+    let arcCamera = new BABYLON.ArcRotateCamera(
+        "arcCamera",
+        alpha,
+        beta,
+        radius,
+        target,
         scene
     );
 
-    // Targets the camera to a particular position
-    camera.setTarget(new BABYLON.Vector3(0, 0, 0));
+    // Targets the camera to a particular position. In this case the scene origin
+    // arcCamera.setTarget(BABYLON.Vector3.Zero());
 
-    // Sets the sensitivity of the camera to movement and rotation
-    camera.angularSensibility = 10;
-    camera.moveSensibility = 10;
-
-    // Attach the camera to the canvas
-    camera.attachControl(canvas, true);
-
-    // Arc Camera
-    // const alpha = Math.PI / 4;
-    // const beta = Math.PI / 3;
-    // const radius = 8;
-    // const target = BABYLON.Vector3(0, 1, 1);
-    // const camera = new BABYLON.ArcRotateCamera(
-    //     "Camera",
-    //     alpha,
-    //     beta,
-    //     radius,
-    //     target,
-    //     scene
-    // );
-
-    // // Targets the camera to a particular position. In this case the scene origin
-    // camera.setTarget(BABYLON.Vector3.Zero());
-
-    // camera.attachControl(canvas, true);
+    arcCamera.attachControl(canvas, true);
 
     const light = new BABYLON.HemisphericLight(
         "light",
         new BABYLON.Vector3(1, 1, 0)
     );
+
+     // Device Orientation camera
+    // Parameters : name, position, scene
+
+    let devOreintCamera;
+    devOreintCamera = new BABYLON.DeviceOrientationCamera(
+        "DevOreintCamera",
+        new BABYLON.Vector3(0, 0, -10),
+        scene
+    );
+
+    // Targets the devOreintCamera to a particular position
+    devOreintCamera.setTarget(new BABYLON.Vector3(0, 0, 0));
+
+    // Sets the sensitivity of the devOreintCamera to movement and rotation
+    devOreintCamera.angularSensibility = 10;
+    devOreintCamera.moveSensibility = 10;
 
     const layer = new BABYLON.Layer("layer", null, scene, true);
     BABYLON.VideoTexture.CreateFromWebCam(
@@ -98,49 +95,28 @@ const createScene = async () => {
     );
 
     // GUI
-    var advancedTexture =
+    let advancedTexture =
         BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-    var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "Click Me");
+    let button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "Click Me");
     button1.width = "150px";
     button1.height = "40px";
     button1.color = "white";
     button1.cornerRadius = 20;
     button1.background = "green";
     button1.onPointerUpObservable.add(() => {
-        alert("you did it!");
+        if(scene.activeCamera == arcCamera){
+            scene.activeCamera = devOreintCamera;
+        }
+        else {
+            scene.activeCamera = arcCamera;
+        }
+        
     });
     advancedTexture.addControl(button1);
 
-    // const sessionManager = new WebXRSessionManager(scene);
-    // const xrCamera = new WebXRCamera("camera", scene, sessionManager);
-
-    // // Initialize XR experience with default experience helper.
-    // const xrHelper = await scene.createDefaultXRExperienceAsync({
-    //     uiOptions: {
-    //         sessionMode: "immersive-ar",
-    //         referenceSpaceType: "local-floor",
-    //     },
-    //     optionalFeatures: true,
-    // });
-    // if (!xrHelper.baseExperience) {
-    //     // XR support is unavailable.
-    //     console.log("WebXR support is unavailable");
-    // } else {
-    //     // XR support is available; proceed.
-    //     // const supported = await WebXRSessionManager.IsSessionSupportedAsync('immersive-vr');
-    //     // if (supported) {
-    //     // // xr available, session supported
-    //     // const sessionManager = new WebXRSessionManager(scene);
-    //     // const xrCamera = new WebXRCamera("freeCamera", scene, sessionManager);
-    //     // }
-
-    //     return scene;
-    // }
     return scene;
 };
-
-
 
 // const sceneToRender = createScene();
 
