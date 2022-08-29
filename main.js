@@ -73,7 +73,6 @@ const createScene = async () => {
     // camera.setTarget(BABYLON.Vector3.Zero());
 
     // camera.attachControl(canvas, true);
-    
 
     const light = new BABYLON.HemisphericLight(
         "light",
@@ -98,32 +97,63 @@ const createScene = async () => {
         }
     );
 
+    // GUI
+    var advancedTexture =
+        BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+    var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "Click Me");
+    button1.width = "150px";
+    button1.height = "40px";
+    button1.color = "white";
+    button1.cornerRadius = 20;
+    button1.background = "green";
+    button1.onPointerUpObservable.add(function () {
+        alert("you did it!");
+    });
+    advancedTexture.addControl(button1);
+
     // const sessionManager = new WebXRSessionManager(scene);
     // const xrCamera = new WebXRCamera("camera", scene, sessionManager);
 
-    // Initialize XR experience with default experience helper.
-    const xrHelper = await scene.createDefaultXRExperienceAsync({
-        uiOptions: {
-            sessionMode: "immersive-ar",
-            referenceSpaceType: "local-floor",
-        },
-        optionalFeatures: true,
-    });
-    if (!xrHelper.baseExperience) {
-        // XR support is unavailable.
-        console.log("WebXR support is unavailable");
-    } else {
-        // XR support is available; proceed.
-        // const supported = await WebXRSessionManager.IsSessionSupportedAsync('immersive-vr');
-        // if (supported) {
-        // // xr available, session supported
-        // const sessionManager = new WebXRSessionManager(scene);
-        // const xrCamera = new WebXRCamera("freeCamera", scene, sessionManager);
-        // }
+    // // Initialize XR experience with default experience helper.
+    // const xrHelper = await scene.createDefaultXRExperienceAsync({
+    //     uiOptions: {
+    //         sessionMode: "immersive-ar",
+    //         referenceSpaceType: "local-floor",
+    //     },
+    //     optionalFeatures: true,
+    // });
+    // if (!xrHelper.baseExperience) {
+    //     // XR support is unavailable.
+    //     console.log("WebXR support is unavailable");
+    // } else {
+    //     // XR support is available; proceed.
+    //     // const supported = await WebXRSessionManager.IsSessionSupportedAsync('immersive-vr');
+    //     // if (supported) {
+    //     // // xr available, session supported
+    //     // const sessionManager = new WebXRSessionManager(scene);
+    //     // const xrCamera = new WebXRCamera("freeCamera", scene, sessionManager);
+    //     // }
 
-        return scene;
-    }
+    //     return scene;
+    // }
+    return scene;
 };
+
+// GUI
+var advancedTexture =
+    BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "Click Me");
+button1.width = "150px";
+button1.height = "40px";
+button1.color = "white";
+button1.cornerRadius = 20;
+button1.background = "green";
+button1.onPointerUpObservable.add(function () {
+    alert("you did it!");
+});
+advancedTexture.addControl(button1);
 
 // const sceneToRender = createScene();
 
