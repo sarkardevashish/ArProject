@@ -36,8 +36,8 @@ const createScene = async () => {
    
 
     // Arc Camera
-    const alpha = Math.PI / 4;
-    const beta = Math.PI / 3;
+    const alpha = - 2* Math.PI / 3;
+    const beta =  Math.PI / 2;
     const radius = 8;
     const target = BABYLON.Vector3(0, 1, 1);
     let arcCamera = new BABYLON.ArcRotateCamera(
@@ -48,6 +48,8 @@ const createScene = async () => {
         target,
         scene
     );
+    arcCamera.lowerRadiusLimit = 3;
+    arcCamera.upperRadiusLimit = 12;
 
     // Targets the camera to a particular position. In this case the scene origin
     // arcCamera.setTarget(BABYLON.Vector3.Zero());
@@ -75,6 +77,8 @@ const createScene = async () => {
     // Sets the sensitivity of the devOreintCamera to movement and rotation
     devOreintCamera.angularSensibility = 10;
     devOreintCamera.moveSensibility = 10;
+
+    devOreintCamera.attachControl(canvas, true)
 
     const layer = new BABYLON.Layer("layer", null, scene, true);
     BABYLON.VideoTexture.CreateFromWebCam(
