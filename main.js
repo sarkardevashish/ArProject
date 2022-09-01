@@ -23,6 +23,7 @@ const createScene = async () => {
         scene,
         function (newMeshes) {
             newMeshes[0].scaling = new BABYLON.Vector3(4, 4, 4);
+            scene.createDefaultCameraOrLight(true, true, true);
         }
     );
 
