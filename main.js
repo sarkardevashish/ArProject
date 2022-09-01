@@ -22,7 +22,7 @@ const createScene = async () => {
         "fish.glb",
         scene,
         function (newMeshes) {
-            newMeshes[0].scaling = new BABYLON.Vector3(4, 4, 4);
+            // newMeshes[0].scaling = new BABYLON.Vector3(4, 4, 4);
             scene.createDefaultCameraOrLight(true, true, true);
         }
     );
@@ -34,7 +34,6 @@ const createScene = async () => {
     //     scene
     // );
 
-   
 
     // Arc Camera
     const alpha = - 2* Math.PI / 3;
@@ -68,7 +67,7 @@ const createScene = async () => {
     let devOreintCamera;
     devOreintCamera = new BABYLON.DeviceOrientationCamera(
         "DevOreintCamera",
-        new BABYLON.Vector3(0, 0, -10),
+        new BABYLON.Vector3(0, 0, 0),
         scene
     );
 
